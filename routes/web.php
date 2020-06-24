@@ -13,9 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['prefix'=>'admin', 'namespace'=>'admin'], function (){
-    Route::get('/', 'HomeController@index')->name('admin.home');
-    Route::get('/show-list', 'HomeController@show')->name('admin.show');
+    Route::get('/', 'HomeController@index')
+        ->name('admin.home');
+    Route::get('/show-list', 'HomeController@show')
+        ->name('admin.show');
+    Route::get('/update-todo', 'HomeController@update_todo')
+            ->name('admin.update')->middleware('check_input_update');
 
-    Route::post('/post-todo-name', 'HomeController@insert_to_todo_list');
+    Route::post('/post-todo-name', 'HomeController@insert_to_todo_list')
+        ->name('admin.add_todo_item')
+        ->middleware('check_input_name');
+    Route::post('/delete-todo-item', 'HomeController@delete_todo_item')
+        ->name('admin.delete_todo_item');
 });
 
